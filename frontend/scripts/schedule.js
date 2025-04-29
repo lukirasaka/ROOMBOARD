@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('logged-user').textContent = username;
   document.getElementById('back').onclick = () => {
-    window.location.href = 'tables.html';
+    window.location.href = 'main.html';
   };
 
   const themeBtn = document.getElementById('theme-toggle');
