@@ -1,3 +1,4 @@
+const api_base = location.origin;
 const username = localStorage.getItem('username');
 document.addEventListener('DOMContentLoaded', async () => {
   const tableId = localStorage.getItem('tableId');
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!receiver) return;
   
     try {
-      const res = await fetch('http://localhost:3005/invites', {
+      const res = await fetch('${api_base}/invites', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -144,7 +145,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function fetchEntries() {
   const tableId = localStorage.getItem('tableId');
   try {
-    const res = await fetch(`http://localhost:3005/tables/${tableId}/entries`);
+    const res = await fetch(`${api_base}/tables/${tableId}/entries`);
     const data = await res.json();
     const list = document.getElementById('entry-list');
     list.innerHTML = '';
@@ -175,7 +176,7 @@ async function fetchEntries() {
       toggleBtn.style.marginLeft = '1em';
 
       toggleBtn.onclick = async () => {
-        await fetch(`http://localhost:3005/entries/${entry.id}/toggle`, { method: 'POST' });
+        await fetch(`${api_base}/entries/${entry.id}/toggle`, { method: 'POST' });
         entry.done = !entry.done;
         li.classList.toggle('done', entry.done);
         toggleBtn.textContent = entry.done ? '↩️ Vrátit jako nedokončený' : '✅ Označit jako hotový';
@@ -213,7 +214,7 @@ async function fetchEntries() {
         if (!content) return;
 
         try {
-          const res = await fetch(`http://localhost:3005/entries/${entry.id}/comments`, {
+          const res = await fetch(`${api_base}/entries/${entry.id}/comments`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, content })
@@ -230,7 +231,7 @@ async function fetchEntries() {
             const confirmDel = await showConfirm('Opravdu smazat komentář?');
             if (!confirmDel) return;
 
-            await fetch(`http://localhost:3005/comments/${newComment.id}`, { method: 'DELETE' });
+            await fetch(`${api_base}/comments/${newComment.id}`, { method: 'DELETE' });
             commentItem.remove();
             showToast('Komentář odstraněn.', 'success');
           };
@@ -248,7 +249,7 @@ async function fetchEntries() {
       li.appendChild(commentSection);
 
       // Načíst existující komentáře
-      const resCom = await fetch(`http://localhost:3005/entries/${entry.id}/comments`);
+      const resCom = await fetch(`${api_base}/entries/${entry.id}/comments`);
       const commentData = await resCom.json();
 
       commentData.comments.forEach(c => {
@@ -263,7 +264,7 @@ async function fetchEntries() {
             const confirmDel = await showConfirm('Opravdu smazat komentář?');
             if (!confirmDel) return;
 
-            await fetch(`http://localhost:3005/comments/${c.id}`, { method: 'DELETE' });
+            await fetch(`${api_base}/comments/${c.id}`, { method: 'DELETE' });
             fetchEntries();
             showToast('Komentář odstraněn.', 'success');
           };
@@ -285,11 +286,11 @@ async function fetchEntries() {
 async function checkIfOwner() {
   const tableId = localStorage.getItem('tableId');
   try {
-    const res = await fetch(`http://localhost:3005/table/${tableId}`);
+    const res = await fetch(`${api_base}/table/${tableId}`);
     const data = await res.json();
     const table = data.table;
 
-    const userRes = await fetch(`http://localhost:3005/user-id?username=${username}`);
+    const userRes = await fetch(`${api_base}/user-id?username=${username}`);
     const userData = await userRes.json();
 
     if (userData.id === table.owner_id) {
@@ -312,7 +313,7 @@ document.getElementById('archive-btn')?.addEventListener('click', async () => {
   if (!confirmArchive) return;
 
   try {
-    await fetch(`http://localhost:3005/tables/${localStorage.getItem('tableId')}/archive-done`, {
+    await fetch(`${api_base}/tables/${localStorage.getItem('tableId')}/archive-done`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: localStorage.getItem('username') })
@@ -339,7 +340,7 @@ document.getElementById('new-task-form')?.addEventListener('submit', async (e) =
   if (!content) return;
 
   try {
-    await fetch(`http://localhost:3005/tables/${localStorage.getItem('tableId')}/add`, {
+    await fetch(`${api_base}/tables/${localStorage.getItem('tableId')}/add`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: localStorage.getItem('username'), content, due_date, priority })

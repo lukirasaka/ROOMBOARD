@@ -1,3 +1,4 @@
+const api_base = location.origin;
 document.addEventListener('DOMContentLoaded', async () => {
   const username = localStorage.getItem('username');
   const tableId = localStorage.getItem('tableId');
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function loadArchive() {
   const tableId = localStorage.getItem('tableId');
   try {
-    const res = await fetch(`http://localhost:3005/tables/${tableId}/archived`);
+    const res = await fetch(`${api_base}/tables/${tableId}/archived`);
     const data = await res.json();
     const list = document.getElementById('archive-list');
     list.innerHTML = '';
@@ -69,7 +70,7 @@ async function loadArchive() {
         if (!confirmed) return;
 
         try {
-          await fetch(`http://localhost:3005/archived/${entry.id}/restore`, { method: 'POST' });
+          await fetch(`${api_base}/archived/${entry.id}/restore`, { method: 'POST' });
           showToast('Úkol obnoven.', 'success');
           await loadArchive();
         } catch (err) {
@@ -84,7 +85,7 @@ async function loadArchive() {
       
         try {
           const tableId = localStorage.getItem('tableId');
-          await fetch(`http://localhost:3005/archived/${tableId}/clear`, { method: 'DELETE' });
+          await fetch(`${api_base}/${tableId}/clear`, { method: 'DELETE' });
           showToast('Archiv byl vymazán.', 'success');
           await loadArchive();
         } catch (err) {
@@ -101,7 +102,7 @@ async function loadArchive() {
         if (!confirmed) return;
 
         try {
-          await fetch(`http://localhost:3005/archived/${entry.id}`, { method: 'DELETE' });
+          await fetch(`${api_base}/archived/${entry.id}`, { method: 'DELETE' });
           showToast('Úkol nenávratně smazán.', 'success');
           await loadArchive();
         } catch (err) {

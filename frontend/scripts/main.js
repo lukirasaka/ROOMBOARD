@@ -1,3 +1,4 @@
+const api_base = location.origin;
 document.addEventListener('DOMContentLoaded', async () => {
   const username = localStorage.getItem('username');
 
@@ -49,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-      const res = await fetch('http://localhost:3005/tables/create', {
+      const res = await fetch('${api_base}/tables/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -94,7 +95,7 @@ let userId = null;
 async function fetchUserIdAndTables() {
   const username = localStorage.getItem('username');
   try {
-    const res = await fetch(`http://localhost:3005/user-id?username=${username}`);
+    const res = await fetch(`${api_base}/user-id?username=${username}`);
     const data = await res.json();
     if (!res.ok || !data.id) throw new Error("Nepodařilo se načíst ID uživatele");
     userId = data.id;
@@ -107,7 +108,7 @@ async function fetchUserIdAndTables() {
 
 async function loadTables() {
   const username = localStorage.getItem('username');
-  const res = await fetch(`http://localhost:3005/tables?user=${username}`);
+  const res = await fetch(`${api_base}/tables?user=${username}`);
   const data = await res.json();
   const list = document.getElementById("table-list");
   list.innerHTML = "";
@@ -133,7 +134,7 @@ async function loadTables() {
         const confirmDelete = await showConfirm(`Opravdu smazat tabulku "${table.name}"?`);
         if (!confirmDelete) return;
 
-        await fetch(`http://localhost:3005/tables/${table.id}`, { method: "DELETE" });
+        await fetch(`${api_base}/tables/${table.id}`, { method: "DELETE" });
         showToast('Tabulka odstraněna.', 'success');
         loadTables();
       };
@@ -146,7 +147,7 @@ async function loadTables() {
         const confirmLeave = await showConfirm(`Opravdu chceš opustit tabulku "${table.name}"?`);
         if (!confirmLeave) return;
 
-        await fetch(`http://localhost:3005/tables/${table.id}/leave`, {
+        await fetch(`${api_base}/tables/${table.id}/leave`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username }),
@@ -163,7 +164,7 @@ async function loadTables() {
 
 async function loadInvites() {
   const username = localStorage.getItem('username');
-  const res = await fetch(`http://localhost:3005/invites?receiver=${username}`);
+  const res = await fetch(`${api_base}/invites?receiver=${username}`);
   const data = await res.json();
   const list = document.getElementById("invite-list");
   list.innerHTML = "";
@@ -176,7 +177,7 @@ async function loadInvites() {
     acceptBtn.textContent = "✅ Přijmout";
     acceptBtn.className = "button";
     acceptBtn.onclick = async () => {
-      await fetch(`http://localhost:3005/invites/${inv.id}/respond`, {
+      await fetch(`${api_base}/invites/${inv.id}/respond`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ accept: true }),
@@ -190,7 +191,7 @@ async function loadInvites() {
     rejectBtn.textContent = "❌ Odmítnout";
     rejectBtn.className = "button";
     rejectBtn.onclick = async () => {
-      await fetch(`http://localhost:3005/invites/${inv.id}/respond`, {
+      await fetch(`${api_base}/invites/${inv.id}/respond`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ accept: false }),

@@ -9,15 +9,14 @@ const port = 3005;
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'frontend')));
 
+require('dotenv').config();
+
 app.use(cors());
 app.use(express.json());
 
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'spolubydlici',
-  password: 'postgres',
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 });
 
 async function getUserId(username) {

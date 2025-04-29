@@ -1,3 +1,4 @@
+const api_base = location.origin;
 let currentOffsetWeeks = 0; // 0 = aktuální týden
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -59,7 +60,7 @@ function isDateInWeek(date, offsetWeeks = 0) {
 async function generateSchedule() {
   try {
     const tableId = localStorage.getItem('tableId');
-    const res = await fetch(`http://localhost:3005/tables/${tableId}/entries`);
+    const res = await fetch(`${api_base}/tables/${tableId}/entries`);
     const data = await res.json();
 
     document.querySelectorAll('.schedule-day').forEach(day => day.innerHTML = '');

@@ -1,3 +1,4 @@
+const api_base = location.origin;
 document.addEventListener('DOMContentLoaded', async () => {
   const username = localStorage.getItem('username');
 
@@ -30,7 +31,7 @@ function applyTheme(theme) {
 
 async function loadTables() {
   try {
-    const res = await fetch('http://localhost:3005/tables/public');
+    const res = await fetch('${api_base}/tables/public');
     const data = await res.json();
     window.allTables = data;
     renderTables(data);
@@ -85,7 +86,7 @@ function openModal(table) {
     const password = input.value.trim();
     try {
       const username = localStorage.getItem('username');
-      const res = await fetch('http://localhost:3005/tables/join', {
+      const res = await fetch('${api_base}/tables/join', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tableId: table.id, username, password })
