@@ -80,6 +80,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
+  document.getElementById('show-schedule-btn').onclick = () => {
+    window.location.href = 'schedule.html';
+  };
+
   await fetchUserIdAndTables();
   await loadInvites();
 });

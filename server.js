@@ -209,22 +209,14 @@ app.get('/entries/:id/comments', async (req, res) => {
     res.status(500).json({ error: 'Chyba při načítání komentářů.' });
   }
 });
-
 app.post('/entries/:entryId/comments', async (req, res) => {
   const { entryId } = req.params;
   const { username, content } = req.body;
+
   try {
     const userResult = await pool.query('SELECT id FROM users WHERE username = $1', [username]);
     const userId = userResult.rows[0]?.id;
     if (!userId) return res.status(404).json({ error: 'Uživatel nenalezen' });
-    // Nejprve ověřit, zda už tabulka s tímto názvem existuje
-    const duplicateCheck = await pool.query(
-    'SELECT 1 FROM tables WHERE name = $1 AND owner_id = $2',
-    [name, user.id]
-    );
-if (duplicateCheck.rows.length > 0) {
-  return res.status(400).json({ error: 'Tabulka se stejným názvem už existuje.' });
-}
 
     const insertResult = await pool.query(
       'INSERT INTO comments (entry_id, user_id, content) VALUES ($1, $2, $3) RETURNING id',
@@ -232,7 +224,8 @@ if (duplicateCheck.rows.length > 0) {
     );
 
     res.json({ id: insertResult.rows[0]?.id });
-  } catch {
+  } catch (err) {
+    console.error('Chyba při přidávání komentáře:', err);
     res.status(500).json({ error: 'Chyba při přidávání komentáře' });
   }
 });
@@ -476,6 +469,50 @@ app.delete('/archived/:tableId/clear', async (req, res) => {
   } catch (err) {
     console.error('Chyba při mazání archivu:', err);
     res.status(500).json({ error: 'Nelze vymazat archiv.' });
+  }
+});
+
+app.get('/entries-for-user/:username', async (req, res) => {
+  const { username } = req.params;
+  try {
+    const userResult = await pool.query('SELECT id FROM users WHERE username = $1', [username]);
+    const userId = userResult.rows[0]?.id;
+    if (!userId) return res.status(404).json({ error: 'Uživatel nenalezen' });
+
+    const result = await pool.query(`
+      SELECT e.content, e.due_date, e.priority, e.done
+      FROM table_entries e
+      JOIN table_members m ON e.table_id = m.table_id
+      WHERE m.user_id = $1
+    `, [userId]);
+
+    res.json({ entries: result.rows });
+  } catch (err) {
+    console.error('Chyba při získávání všech úkolů pro uživatele:', err);
+    res.status(500).json({ error: 'Chyba serveru.' });
+  }
+});
+
+app.get('/user/:username/entries', async (req, res) => {
+  const { username } = req.params;
+  try {
+    const userResult = await pool.query('SELECT id FROM users WHERE username = $1', [username]);
+    const userId = userResult.rows[0]?.id;
+    if (!userId) return res.status(404).json({ error: 'Uživatel nenalezen' });
+
+    const entriesResult = await pool.query(`
+      SELECT e.*, t.name AS table_name
+      FROM table_entries e
+      JOIN tables t ON e.table_id = t.id
+      JOIN table_members m ON m.table_id = e.table_id
+      WHERE m.user_id = $1
+      ORDER BY e.due_date ASC
+    `, [userId]);
+
+    res.json(entriesResult.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Chyba při načítání úkolů uživatele' });
   }
 });
 

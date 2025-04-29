@@ -773,8 +773,10 @@ body.theme-dark .schedule-task:hover {
   color: #555;
 }
 
-body.theme-dark .task-desc {
-  color: #ccc;
+body.theme-dark .task-meta {
+  color: #f0f0f0 !important;
+  opacity: 1 !important;
+  filter: none !important;
 }
 
 body.theme-dark .schedule-day {

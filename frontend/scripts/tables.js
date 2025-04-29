@@ -27,10 +27,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     fetchEntries();
   });
 
-  document.getElementById('show-schedule-btn').onclick = () => {
-    window.location.href = 'schedule.html';
-  };
-
   document.getElementById('invite-btn')?.addEventListener('click', async () => {
     const receiver = await showInputPrompt('Zadej jméno uživatele, kterého chceš pozvat:');
     if (!receiver) return;
@@ -74,7 +70,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         background: ${document.body.className === 'theme-dark' ? '#2b2b2b' : '#fff8c6'};
         color: ${document.body.className === 'theme-dark' ? '#eee' : '#222'};
         padding: 2em; border-radius: 12px; text-align: center;
-        font-family: 'Patrick Hand', cursive;
+        font-family: 'Quicksand', sans-serif;
       `;
   
       const label = document.createElement('p');
@@ -87,6 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         border-radius: 8px; border: 1px solid #aaa;
         background: ${document.body.className === 'theme-dark' ? '#555' : '#fff'};
         color: ${document.body.className === 'theme-dark' ? '#eee' : '#000'};
+        font-family: 'Quicksand', sans-serif;
       `;
   
       const buttons = document.createElement('div');
@@ -99,6 +96,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   
       const btnStyle = `
         padding: 0.5em 1em; border-radius: 8px; border: 1px solid #aaa; cursor: pointer;
+        font-family: 'Quicksand', sans-serif;
       `;
       okBtn.style = btnStyle;
       cancelBtn.style = btnStyle;
@@ -111,8 +109,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         cancelBtn.style.backgroundColor = '#f0c4c4'; cancelBtn.style.color = '#000';
       }
   
-      okBtn.onclick = () => { document.body.removeChild(overlay); resolve(input.value.trim()); };
-      cancelBtn.onclick = () => { document.body.removeChild(overlay); resolve(null); };
+      const close = () => document.body.removeChild(overlay);
+  
+      okBtn.onclick = () => { close(); resolve(input.value.trim().toLowerCase()); };
+      cancelBtn.onclick = () => { close(); resolve(null); };
+  
+      // ENTER => OK
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          okBtn.click();
+        }
+      });
   
       buttons.appendChild(cancelBtn);
       buttons.appendChild(okBtn);
