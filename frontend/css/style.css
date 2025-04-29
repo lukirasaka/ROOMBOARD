@@ -256,6 +256,7 @@ body.theme-notes {
     color: #666;
   }
   
+  
   body.theme-dark {
     font-family: 'Quicksand', sans-serif;
     background-color: #1e1e1e;
@@ -771,6 +772,12 @@ body.theme-dark .schedule-task:hover {
   font-size: 0.85em;
   margin-top: 0.5em;
   color: #555;
+}
+
+body.theme-dark .task-desc {
+  font-size: 0.85em;
+  margin-top: 0.5em;
+  color: #f0f0f0; 
 }
 
 body.theme-dark .task-meta {
