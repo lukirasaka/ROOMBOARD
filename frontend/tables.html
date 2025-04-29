@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <title>ROOMBOARD - Úkoly</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="theme-notes">
+  <div class="main-container">
+    <h1>Tabulka – Úkoly
+      <button id="theme-toggle" title="Přepnout motiv" style="margin-left: 1em;">🌙</button>
+    </h1>
+
+    <p>
+      Přihlášen jako: <strong id="logged-user"></strong>
+      <button id="back" class="button" style="margin-left: 1em;">← Zpět</button>
+    </p>
+
+    <!-- 🔁 TLAČÍTKA PŘESUNUTA SEM -->
+    <div class="top-buttons">
+      <div id="owner-actions" class="left-buttons">
+        <button id="invite-btn" class="button">➕ Pozvat uživatele</button>
+        <button id="archive-btn" class="button">🗃️ Archivovat hotové</button>
+        <button id="show-archive-btn" class="button">📦 Zobrazit archiv</button>
+      </div>
+    
+      <div class="right-buttons">
+        <button id="show-schedule-btn" class="button">📅 Zobrazit harmonogram</button>
+      </div>
+    </div>
+    
+
+    <h2>Přidat úkol</h2>
+    <form id="new-task-form">
+      <input type="text" id="content" placeholder="Co udělat?" required />
+      <input type="date" id="due-date" />
+      <select id="priority">
+        <option value="">Priorita (nevybráno)</option>
+        <option value="nízká">🟢 Nízká</option>
+        <option value="střední">🟡 Střední</option>
+        <option value="vysoká">🔴 Vysoká</option>
+      </select>
+      <button type="submit" class="button">Přidat</button>
+    </form>
+
+    <div id="filters">
+      <label for="filter-priority">
+        📌 <span class="filter-label-text">Priorita:</span>
+        <select id="filter-priority">
+          <option value="">Všechny</option>
+          <option value="vysoká">🔴 Vysoká</option>
+          <option value="střední">🟡 Střední</option>
+          <option value="nízká">🟢 Nízká</option>
+        </select>
+      </label>
+    
+      <label for="sort-mode">
+        📋 <span class="filter-label-text">Řazení:</span>
+        <select id="sort-mode">
+          <option value="created">Datum vytvoření</option>
+          <option value="due">Termín splnění</option>
+        </select>
+      </label>
+    
+      <button id="filter-undone-toggle" type="button">✅ Pouze nedokončené</button>
+    </div>
+
+    <ul id="entry-list"></ul>
+  </div>
+  <script src="scripts/tables.js"></script>
+  <script src="scripts/toast.js"></script>
+</body>
+</html>

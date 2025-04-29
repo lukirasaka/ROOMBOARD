@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <title>Moje tabulky</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="theme-notes">
+  <div class="main-container">
+    <h1>Vítej, <span id="user-name"></span>!
+      <button id="logout" class="button">Odhlásit</button>
+      <button id="theme-toggle" title="Přepnout motiv" style="margin-left: 1em;">🌙</button>
+    </h1>
+
+    <div class="centered-section">
+      <h2>📬 Pozvánky</h2>
+      <ul id="invite-list"></ul>
+    
+      <h2>Moje tabulky</h2>
+      <ul id="table-list"></ul>
+    
+      <button id="join-button" class="button">🔍 Připojit se k existující tabulce</button>
+    </div>
+    
+    <h2>Vytvořit novou tabulku</h2>
+    <form id="create-table-form">
+      <input type="checkbox" id="is-private" hidden />
+      <input type="text" id="table-name" placeholder="Název tabulky" required />
+      <input type="text" id="table-type" placeholder="Typ (např. Úkoly, Nákupy)" required />
+      <input type="password" id="table-password" placeholder="Heslo pro připojení (nepovinné)" />
+      <div id="form-options">
+        <button id="privacy-toggle" type="button">🔓 Veřejná tabulka</button>
+        <button type="submit">Vytvořit</button>
+      </div>      
+    </form>
+
+    <p id="message" style="color: red;"></p>
+  </div>
+
+  <script src="scripts/main.js"></script>
+  <script src="scripts/toast.js"></script>
+</body>
+</html>

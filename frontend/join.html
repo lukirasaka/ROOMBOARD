@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Připojit se k tabulce</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="theme-notes">
+  <div class="main-container">
+    <h1>🔍 Připojit se k existující tabulce
+    <button id="theme-toggle" title="Přepnout motiv" style="margin-left: 1em;">🌙</button>
+    </h1>
+
+    <p>Přihlášen jako: <strong id="logged-user"></strong>
+      <button id="back" class="button" style="margin-left: 1em">← Zpět</button>
+    </p>
+
+    <input type="text" id="search" placeholder="Hledat podle názvu nebo zakladatele…" style="width: 100%; margin-top: 1em; padding: 0.5em; border-radius: 8px;">
+
+    <table style="width: 100%; margin-top: 1em; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th>Název</th>
+          <th>Zakladatel</th>
+          <th>Vytvořeno</th>
+          <th>Počet členů</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h2 id="modal-name"></h2>
+        <p id="modal-description"></p>
+        <input type="password" id="modal-password" placeholder="Zadej heslo">
+        <button id="modal-join">Připojit se</button>
+        <p id="modal-error" style="color:red; margin-top: 0.5em;"></p>
+      </div>
+    </div>
+
+    <!-- Toast notifications -->
+    <div id="toast" class="toast"></div>
+  </div>
+
+  <script src="scripts/join.js"></script>
+  <script src="scripts/toast.js"></script>
+</body>
+</html>

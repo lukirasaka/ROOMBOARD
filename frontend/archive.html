@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <title>Archiv úkolů</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="theme-notes">
+  <div class="main-container">
+    <h1>📦 Archivované úkoly
+      <button id="theme-toggle" title="Přepnout motiv" style="margin-left: 1em;">🌙</button>
+    </h1>
+
+    <p>
+      Přihlášen jako: <strong id="logged-user"></strong>
+      <button id="back" class="button" style="margin-left: 1em;">← Zpět</button>
+      <button id="clear-archive" class="button" style="margin-left: 1em;">🗑️ Vymazat archiv</button>
+    </p>
+
+    <ul id="archive-list"></ul>
+  </div>
+
+  <script src="scripts/archive.js"></script>
+  <script src="scripts/toast.js"></script>
+</body>
+</html>

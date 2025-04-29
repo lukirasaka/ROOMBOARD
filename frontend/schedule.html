@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Harmonogram úkolů</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="theme-notes">
+  <div class="main-container">
+    <h1>📅 Harmonogram úkolů
+      <button id="theme-toggle" title="Přepnout motiv" style="margin-left: 1em;">🌙</button>
+    </h1>
+
+    <p>Přihlášen jako: <strong id="logged-user"></strong>
+      <button id="back" class="button" style="margin-left: 1em;">← Zpět na tabulky</button>
+    </p>
+
+    <div id="week-navigation" style="margin: 1em 0; text-align: center;">
+      <button id="prev-week" class="button week-nav">◀ Předchozí týden</button>
+      <span id="week-label" class="week-range">28. 04. - 04. 05.</span>
+      <button id="next-week" class="button week-nav">▶ Další týden</button>
+    </div>
+
+    <div id="schedule-view" class="schedule-grid">
+      <div class="schedule-header">Pondělí</div>
+      <div class="schedule-header">Úterý</div>
+      <div class="schedule-header">Středa</div>
+      <div class="schedule-header">Čtvrtek</div>
+      <div class="schedule-header">Pátek</div>
+      <div class="schedule-header">Sobota</div>
+      <div class="schedule-header">Neděle</div>
+
+      <div class="schedule-day" data-day="1"></div>
+      <div class="schedule-day" data-day="2"></div>
+      <div class="schedule-day" data-day="3"></div>
+      <div class="schedule-day" data-day="4"></div>
+      <div class="schedule-day" data-day="5"></div>
+      <div class="schedule-day" data-day="6"></div>
+      <div class="schedule-day" data-day="0"></div>
+    </div>
+  </div>
+
+  <script src="scripts/schedule.js"></script>
+</body>
+</html>
