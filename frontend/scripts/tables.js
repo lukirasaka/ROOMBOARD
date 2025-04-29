@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!receiver) return;
   
     try {
-      const res = await fetch('${api_base}/invites', {
+      const res = await fetch(`${api_base}/invites`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

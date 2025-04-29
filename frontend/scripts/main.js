@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-      const res = await fetch('${api_base}/tables/create', {
+      const res = await fetch(`${api_base}/tables/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

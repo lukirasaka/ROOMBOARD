@@ -60,7 +60,7 @@ if (themeToggle) {
       }
 
       try {
-        const res = await fetch('${api_base}/register', {
+        const res = await fetch(`${api_base}/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, password })
@@ -86,7 +86,7 @@ if (themeToggle) {
 
     } else {
       try {
-        const res = await fetch('${api_base}/login', {
+        const res = await fetch(`${api_base}/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, password })
